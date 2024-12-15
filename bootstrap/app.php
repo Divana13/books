@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Middleware\CorsMiddleware;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\CorsMiddleware;
+use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -16,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // $middleware->append(CorsMiddleware::class);
         $middleware->alias([
             'cors' => \App\Http\Middleware\CorsMiddleware::class,
+        ]);
+        // $middleware([
+        //     HandleCors::class,
+        // ], 'api');
+        $middleware->api(prepend: [
+            HandleCors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
